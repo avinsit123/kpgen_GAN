@@ -1,7 +1,7 @@
 # Keyphrase-GAN
 This repository contains the code for the paper <a href="https://arxiv.org/abs/1909.12229">Keyphrase Generation for Scientific Articles using GANs</a>.We have built a novel adversarial method to improve upon the generation of keyphrases using supervised approaches.Our Implementation is built on the starter code from <a href = "https://github.com/kenchan0226/keyphrase-generation-rl"> keyphrase-generation-rl </a> and <a href = "https://github.com/memray/seq2seq-keyphrase-pytorch"> seq2seq-keyphrase-pytorch </a> . Pls comment any issues in the issues section.
 
-![Alt text](Images/Discriminator.jpg?raw=true "Schematic of Proposed Discriminator")
+![Alt text](Images/Discriminator-2.jpg?raw=true "Schematic of Proposed Discriminator")
 ## Dependencies 
 
 
@@ -51,6 +51,8 @@ As Discriminator Gradients cannot directly backpropagate towards the Generator b
 ```terminal
  python GAN_Training.py -data data/kp20k_sorted/ -vocab data/kp20k_sorted/ -exp_path exp/%s.%s -exp kp20k -epochs 20 -copy_attention -train_ml -one2many -one2many_mode 1 -batch_size 32 -model [model_path]  -train_rl   -Discriminator_model_path [Discriminator_path]
 ```
+
+![Alt text](Images/GANdia.jpg?raw=true "Proposed Adversarial Model")
 
 ### Training Options
 ```
