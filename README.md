@@ -1,5 +1,5 @@
 # Keyphrase-GAN
-This repository contains the code for the paper <a href="https://arxiv.org/abs/1909.12229">Keyphrase Generation for Scientific Articles using GANs</a>.We have built a novel adversarial method to improve upon the generation of keyphrases using supervised approaches.Our Implementation is built on the starter code from <a href = "https://github.com/kenchan0226/keyphrase-generation-rl"> keyphrase-generation-rl </a> and <a href = "https://github.com/memray/seq2seq-keyphrase-pytorch"> seq2seq-keyphrase-pytorch </a> . Pls comment any issues in the issues section.
+This repository contains the code for our ECIR submission <a href=""> Keyphrase Generation using Generative Adversarial Networks</a>.We have built a novel adversarial method to improve upon the generation of keyphrases using supervised approaches. Our Implementation is built on the starter code from <a href = "https://github.com/kenchan0226/keyphrase-generation-rl"> keyphrase-generation-rl </a> and <a href = "https://github.com/memray/seq2seq-keyphrase-pytorch"> seq2seq-keyphrase-pytorch </a> . Pls comment any issues in the issues section. 
 
 ![Alt text](Images/Discriminator-2.png?raw=true "Schematic of Proposed Discriminator")
 ## Dependencies 
@@ -46,10 +46,16 @@ python GAN_Training.py  -data data/kp20k_sorted/ -vocab data/kp20k_sorted/ -exp_
 All additional flags have been detailed at the end of the repository.
 
 ### Reinforcement Learning 
-As Discriminator Gradients cannot directly backpropagate towards the Generator because of the Discrete Nature of text the Generator is trained by means of policy gradient reinforcement learning techniques . In order to train using RL run
+As Discriminator Gradients cannot directly backpropagate towards the Generator because of the Discrete Nature of text the Generator is trained by means of policy gradient reinforcement learning techniques . Reward Assignment can be done in 2 ways- single reward for entire keyphrase sequence, different rewards for each keyphrase.
 
+In order to train using single reward use
 ```terminal
- python GAN_Training.py -data data/kp20k_sorted/ -vocab data/kp20k_sorted/ -exp_path exp/%s.%s -exp kp20k -epochs 20 -copy_attention -train_ml -one2many -one2many_mode 1 -batch_size 32 -model [model_path]  -train_rl   -Discriminator_model_path [Discriminator_path]
+ python GAN_Training.py -data data/kp20k_sorted/ -vocab data/kp20k_sorted/ -exp_path exp/%s.%s -exp kp20k -epochs 20 -copy_attention -train_ml -one2many -one2many_mode 1 -batch_size 32 -model [model_path]  -train_rl   -Discriminator_model_path [Discriminator_path] -single_reward
+```
+
+In order to train using multiple rewards use
+```terminal
+ python GAN_Training.py -data data/kp20k_sorted/ -vocab data/kp20k_sorted/ -exp_path exp/%s.%s -exp kp20k -epochs 20 -copy_attention -train_ml -one2many -one2many_mode 1 -batch_size 32 -model [model_path]  -train_rl   -Discriminator_model_path [Discriminator_path] -multiple_rewards
 ```
 
 ![Alt text](Images/GANdia.png?raw=true "Proposed Adversarial Model")
@@ -63,15 +69,4 @@ As Discriminator Gradients cannot directly backpropagate towards the Generator b
 -Discriminator_model_path : path to pretrained Discriminators
 -learning_rate : Sets learning rate for Discriminator when used with -train_discriminator 
 -learning_rate_rl : Sets learning rate for Generator during RL Training
-```
-cite our paper as 
-```
-@misc{swaminathan2019keyphrase,
-    title={Keyphrase Generation for Scientific Articles using GANs},
-    author={Avinash Swaminathan and Raj Kuwar Gupta and Haimin Zhang and Debanjan Mahata and Rakesh Gosangi and Rajiv Ratn Shah},
-    year={2019},
-    eprint={1909.12229},
-    archivePrefix={arXiv},
-    primaryClass={cs.CL}
-}
 ```
